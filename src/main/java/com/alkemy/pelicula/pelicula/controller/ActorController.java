@@ -14,7 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class GenreController {
     @Autowired
     private GenreService genreService;
-@PostMapping
+
+    public GenreController(GenreService genreService) {
+        this.genreService = genreService;
+    }
+
+    @PostMapping
     public ResponseEntity<GenreDTO> save(@RequestBody GenreDTO genre){
     GenreDTO genreSave= genreService.save(genre);
      return ResponseEntity.status(HttpStatus.CREATED).body(genreSave);
