@@ -1,6 +1,9 @@
 package com.alkemy.pelicula.pelicula.entity;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +12,8 @@ import java.util.List;
 @Table(name="actor")
 @Getter
 @Setter
+@SQLDelete(sql= "UPDATE actor delete = true WHERE id=?")
+@Where(clause= "delete=false")
 public class ActorEntity {
     @Id
     @GeneratedValue(strategy =GenerationType.SEQUENCE)
@@ -18,6 +23,7 @@ public class ActorEntity {
     private String age;
     private Float weight;
     private String history;
+    private boolean deleted= Boolean.FALSE;
     @ManyToMany(mappedBy="actors", cascade=CascadeType.ALL)
     private List<MoviesEntity> moviess= new ArrayList<>();
 

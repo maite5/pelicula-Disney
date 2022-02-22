@@ -3,11 +3,9 @@ import  lombok.Getter;
 import lombok.Setter;
 @Getter
 @Setter
-public class ActorDTO {
+public class ActorBasicDTO {
     private Long id;
-    private String imageUrl;
     private String name;
-    private String age;
-    private Float weight;
-    private String history;
+    private String imageUrl;
 }
+// here vista de actors
