@@ -11,6 +11,7 @@ public class ActorFiltersDTO {
     private String name;
   //  private String imageUrl;
     private String age;
+    private String title;
     private String order;
     public ActorFiltersDTO(String name, String age, String title, String order) {
         this.name = name;
