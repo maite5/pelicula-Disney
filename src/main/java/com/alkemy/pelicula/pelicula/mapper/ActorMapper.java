@@ -1,27 +1,27 @@
 package com.alkemy.pelicula.pelicula.mapper;
-
+import com.alkemy.pelicula.pelicula.mapper.MovieMapper;
 import antlr.actions.python.CodeLexer;
 import com.alkemy.pelicula.pelicula.dto.ActorBasicDTO;
 import com.alkemy.pelicula.pelicula.dto.ActorDTO;
+import com.alkemy.pelicula.pelicula.dto.MovieDTO;
 import com.alkemy.pelicula.pelicula.entity.ActorEntity;
 import com.alkemy.pelicula.pelicula.entity.MoviesEntity;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class ActorMapper {
     private MoviesEntity moviesEntity;
+    private MovieMapper movieMapper;
+
     public ActorEntity actorDTO2Entity(ActorDTO dto) {
         ActorEntity entity = new ActorEntity();
         entity.setImageUrl(dto.getImageUrl());
         entity.setName(dto.getName());
         entity.setAge(dto.getAge());
         entity.setWeight(dto.getWeight());
-        entity.setAge(dto.getHistory());
+        entity.setHistory(dto.getHistory());
         return entity;
     }
     public ActorDTO actorEntity2DTO(ActorEntity entity, boolean loadMovie){
@@ -32,9 +32,10 @@ public class ActorMapper {
         dto.setAge(entity.getAge());
         dto.setWeight(entity.getWeight());
         dto.setHistory(entity.getHistory());
+
         if (loadMovie){
-            List<MovieDTO> movieDTO= this.movieMapper.movieEntityList2DTOList(entity.getMoviess(),
-                    dto.Movies(movieDTO);
+            List<MovieDTO> movieDTO= this.movieMapper.movieEntityList2DTOList(entity.getMoviess(), false);
+                    dto.setMoviess(movieDTO);
         }
         return dto;
     }
@@ -47,7 +48,7 @@ public class ActorMapper {
         entity.setHistory(actorDTO.getHistory());
 
     }
-    public Set<ActorEntity> actorDTOLis2Entity(List<actorDTO> dtos) {
+    public Set<ActorEntity> actorDTOList2Entity(List<ActorDTO> dtos) {
         Set<ActorEntity> entities = new HashSet<>();
         for (ActorDTO dto : dtos) {
             entities.add(this.actorDTO2Entity(dto));
@@ -67,15 +68,17 @@ public class ActorMapper {
     for (ActorEntity entity: entities){
         basicDTO = new ActorBasicDTO();
         basicDTO.setId(entity.getId());
-       // basicDTO.setImageUrl(entity.getImageUrl());
+        basicDTO.setImageUrl(entity.getImageUrl());
         basicDTO.setName(entity.getName());
        // basicDTO.setAge(entity.getAge());
        // basicDTO.setWeight(entity.getWeight());
       //  basicDTO.setHistory(entity.getHistory());
+      //  basicDTO.setDenomination(entity.getDenomination());
         dtos.add(basicDTO);
-
     }
     return dtos;
-}
+    }
 
+    public List<ActorDTO> actorEntityList2DTOList(Set<ActorEntity> actors, boolean b) {
+    }
 }

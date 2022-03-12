@@ -2,6 +2,8 @@ package com.alkemy.pelicula.pelicula.entity;
 import lombok.Getter;
 import lombok.Setter;
 //import net.bytebuddy.implementation.bind.annotation.This;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -16,45 +18,30 @@ import java.util.Set;
 @Getter
 
 @Setter
-
+@SQLDelete(sql = "UPDATE movie SET deleted = true WHERE id=?")
+@Where(clause = "deleted=false")
 public class MoviesEntity {
     @Id
-
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-
     private Long id;
-
     private String imageUrl;
-
     private String title;
-
     @Column(name="fecha_creacion")
     @DateTimeFormat(pattern= "yyyy/MM/dd")
     private LocalDate fechaCreacion;
-
     private Long calification;
 
     @ManyToOne(fetch= FetchType.EAGER, cascade= CascadeType.ALL)
-
-
-
     @JoinColumn(name= "genre_id ", insertable = false, updatable = false)
-
     private GenreEntity genre;
-
     @Column(name= "genre_id", nullable = false)
-
     private  Long genreId;
-
     @ManyToMany(
-
             cascade= {
-
-            CascadeType.PERSIST,
+                    CascadeType.PERSIST,
 
             CascadeType.MERGE
-
-    } )
+            } )
 
     @JoinTable(
 
@@ -67,7 +54,6 @@ public class MoviesEntity {
     //@Override
 
     public boolean equals(Object obj) {
-
         if (obj == null)
                 return false;
         if (getClass() != obj.getClass()) return false;

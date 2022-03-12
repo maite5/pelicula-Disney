@@ -1,0 +1,114 @@
+{
+	"info": {
+		"_postman_id": "9fb2c79e-7265-44ab-8923-11b86f95ad6f",
+		"name": "Alkemy Lab movies",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "genre",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n    \"name\": \"comedia\",\r\n     \"image_url\": \"/descargar/imagen1.jpg\"\r\n    \r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8083/genre",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"genre"
+					],
+					"query": [
+						{
+							"key": "image_url",
+							"value": "image2",
+							"disabled": true
+						},
+						{
+							"key": "name",
+							"value": "accion",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New RequestFord-date",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		},
+		{
+			"name": "actor",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"imageUrl\":\"Rey leon\",\r\n    \"name\":\"Freddy Me\",\r\n    \"age\":\"23\",\r\n    \"weight\":\"20.70\",\r\n    \"history\":\"d\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8083/actor",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"actor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get actor",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		},
+		{
+			"name": "movies/id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		}
+	]
+}

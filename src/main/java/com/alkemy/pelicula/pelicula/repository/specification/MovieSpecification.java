@@ -1,6 +1,6 @@
 package com.alkemy.pelicula.pelicula.repository.specification;
 import antlr.StringUtils;
-import com.alkemy.pelicula.pelicula.dto.ActorFiltersDTO;
+import com.alkemy.pelicula.pelicula.dto.MovieFiltersDTO;
 import com.alkemy.pelicula.pelicula.entity.ActorEntity;
 import com.alkemy.pelicula.pelicula.entity.MoviesEntity;
 import org.springframework.data.jpa.domain.Specification;
@@ -14,31 +14,46 @@ import java.util.List;
 import javax.persistence.criteria.Predicate;
 import java.time.format.DateTimeFormatter;
 public class MovieSpecification {
-    public Specification<ActorEntity> getByFilters(ActorFiltersDTO filtersDTO){
+     //imageUrl, title, fechaCreacion,calification
+    public Specification<MoviesEntity> getByFilters(MovieFiltersDTO filtersDTO){
         return (root, query, criteriaBuilder) ->{
             List<Predicate> predicates = new ArrayList<>();
-            if (StringUtils.hasLength(filtersDTO.getName())){
+           /* if (StringUtils.hasLength(filtersDTO.getImageUrl())){
                 predicates.add(
                         criteriaBuilder.like(
                                 criteriaBuilder.lower(root.get("name")),
-                                pattern: "%" + filtersDTO.getName().toLowerCase() + "%") );
+                             "%" + filtersDTO.getImageUrl().toLowerCase() + "%") );
+            }*/
+
+            if (StringUtils.hasLength(filtersDTO.getTitle())){
+                predicates.add(
+                        criteriaBuilder.like(
+                                criteriaBuilder.lower(root.get("title")),
+                                 "%" + filtersDTO.getTitle().toLowerCase() + "%") );
             }
-            if (StringUtils.hasLength(filtersDTO.getfechaCreacion())){
+
+            if (StringUtils.hasLength(filtersDTO.getFechaCreacion())){
                 /// todo reuse this in a function
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 LocalDate date = LocalDate.parse(filtersDTO.getFechaCreacion(), formatter);
                 predicates.add(
-                        criteriaBuilder.equal(root.<>get("fechaCreacion"), date)
+                        criteriaBuilder.equal(root.<LocalDate>get("fechaCreacion"), date)
                 );
+            }/*
+            if (!CollectionUtils.isEmpty(filtersDTO.getTitle())){
+                Join<ActorEntity, MoviesEntity> join = root.join("actor", JoinType.INNER);
+                Expression<String> movies_Id = join.get("id");
+                predicates.add(movies_Id.in(filtersDTO.getTitle()));
             }
-            if (!CollectionUtils.isEmpty(filtersDTO.getId())){
-                Join<MoviesEntity, ActorEntity> join = root.join( attributeTitle: "movies", JoinType.INNER);
-                Expression<String> movieId = join.get("id");
-                predicates.add(movieId.in(filtersDTO.getId()));
-            }
+            if (!CollectionUtils.isEmpty(filtersDTO.getName())){
+                Join<ActorEntity, MoviesEntity> join = root.join("actor", JoinType.INNER);
+                Expression<String> actor_id = join.get("id");
+                predicates.add(actor_id.in(filtersDTO.getName()));
+            } */
+
             //remove duplicates
             query.distinct(true);
-        }
+        //}
         //ordr resolving
         String orderByField = "fechaCreacion"; //denominacion
         query.orderBy(
@@ -48,7 +63,7 @@ public class MovieSpecification {
 
         );
         return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
-    }
+    };
 }
+     }
 
-}
