@@ -12,7 +12,11 @@ import java.util.List;
 @RestController
 @RequestMapping("movie")
 public class MovieController{
+<<<<<<< HEAD
     private MovieService movieService;
+=======
+  private MovieService movieService;
+>>>>>>> new
   /*  @Autowired
     private MovieService = movieService;
     @PostMapping
@@ -41,6 +45,18 @@ public class MovieController{
         return ResponseEntity.ok(movies);
     }
 
+<<<<<<< HEAD
+=======
+    } */
+    @Autowired
+    public MovieController(MovieService movieService){ this.movieService = movieService;}
+    @GetMapping("/all")
+    public ResponseEntity<List<MovieBasicDTO>> getAll() {
+        List<MovieBasicDTO> movies = this.movieService.getAll();
+        return ResponseEntity.ok(movies);
+    }
+
+>>>>>>> new
     @GetMapping("/{id}") //31 word
     public  ResponseEntity<MovieDTO> getDetailsById(@PathVariable Long id){
         MovieDTO movie =this.movieService.getDetailsById(id);
@@ -48,7 +64,11 @@ public class MovieController{
     }
     @GetMapping
     public ResponseEntity<List<MovieDTO>>getDetailsByFilters(
+<<<<<<< HEAD
             //  @RequestParam(required = false) String name,
+=======
+          //  @RequestParam(required = false) String name,
+>>>>>>> new
             @RequestParam(required = false) String title,
             @RequestParam(required = false) String fechaCreacion,
             @RequestParam(required = false, defaultValue = "ASC") String order
@@ -82,4 +102,8 @@ public class MovieController{
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> new

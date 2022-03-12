@@ -4,6 +4,7 @@ import antlr.StringUtils;
 import com.alkemy.pelicula.pelicula.dto.ActorFiltersDTO;
 import com.alkemy.pelicula.pelicula.entity.ActorEntity;
 import com.alkemy.pelicula.pelicula.entity.MoviesEntity;
+import com.alkemy.pelicula.pelicula.service.ActorService;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -15,21 +16,21 @@ import java.util.List;
 import javax.persistence.criteria.Predicate;
 import java.util.regex.Pattern;
 @Component
-public class ActorSpecification {
+public class ActorSpecification implements ActorService {
     public Specification<ActorEntity> getByFilters(ActorFiltersDTO filtersDTO) {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
-            if (StringUtils.hasLength(filtersDTO.getName())) {
+            if (StringUtils.hasText(filtersDTO.getName())) {
                 predicates.add(
                         criteriaBuilder.like(
-                                criteriaBuilder.lower(root.get("denomination")),
+                                criteriaBuilder.lower(root.get("name")),
                                 "%" + filtersDTO.getName().toLowerCase() + "%"));
             }
 
             //    public Specification<ActorEntity> getByFilters(ActorFiltersDTO filtersDTO){
             //     return (root, query, criteriaBuilder) ->{
             //        List<Predicate> predicates = new ArrayList<>();
-            if (StringUtils.hasLength(filtersDTO.getAge())) {
+            if (StringUtils.hasText(filtersDTO.getAge())) {
                 predicates.add(
                         criteriaBuilder.like(
                                 criteriaBuilder.lower(root.get("denomination")),
@@ -45,15 +46,15 @@ public class ActorSpecification {
                 );
             } */
             if (!CollectionUtils.isEmpty(filtersDTO.getTitle())) {
-                Join<MoviesEntity, ActorEntity> join = root.join("movie", JoinType.INNER);
-                Expression<String> titleId = join.get("id");
-                predicates.add(titleId.in(filtersDTO.getTitle()));
+                Join<MoviesEntity, ActorEntity> join = root.join("movies", JoinType.INNER);
+                Expression<String> movie_Id = join.get("id");
+                predicates.add(movie_Id.in(filtersDTO.getTitle()));
             }
             //remove duplicates
             query.distinct(true);
 
             //ordr resolving
-            String orderByField = "denomination"; //denominacion
+            String orderByField = "name"; //denominacion
             query.orderBy(
                     filtersDTO.isASC() ?
                             criteriaBuilder.asc(root.get(orderByField)) :

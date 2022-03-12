@@ -35,7 +35,11 @@ public class ActorMapper {
 
         if (loadMovie){
             List<MovieDTO> movieDTO= this.movieMapper.movieEntityList2DTOList(entity.getMoviess(), false);
+<<<<<<< HEAD
             dto.setMoviess(movieDTO);
+=======
+                    dto.setMoviess(movieDTO);
+>>>>>>> new
         }
         return dto;
     }
@@ -63,6 +67,7 @@ public class ActorMapper {
         return dtos;
     }
     public List<ActorBasicDTO> actorEntitySet2BasicDTOList(Collection<ActorEntity> entities){
+<<<<<<< HEAD
         List<ActorBasicDTO> dtos= new ArrayList<>();
         ActorBasicDTO basicDTO;
         for (ActorEntity entity: entities){
@@ -82,3 +87,24 @@ public class ActorMapper {
     public List<ActorDTO> actorEntityList2DTOList(Set<ActorEntity> actors, boolean b) {
     }
 }
+=======
+    List<ActorBasicDTO> dtos= new ArrayList<>();
+    ActorBasicDTO basicDTO;
+    for (ActorEntity entity: entities){
+        basicDTO = new ActorBasicDTO();
+        basicDTO.setId(entity.getId());
+        basicDTO.setImageUrl(entity.getImageUrl());
+        basicDTO.setName(entity.getName());
+       // basicDTO.setAge(entity.getAge());
+       // basicDTO.setWeight(entity.getWeight());
+      //  basicDTO.setHistory(entity.getHistory());
+      //  basicDTO.setDenomination(entity.getDenomination());
+        dtos.add(basicDTO);
+    }
+    return dtos;
+    }
+
+    public List<ActorDTO> actorEntityList2DTOList(Set<ActorEntity> actors, boolean b) {
+    }
+}
+>>>>>>> new
