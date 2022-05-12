@@ -2,6 +2,8 @@ package com.alkemy.pelicula.pelicula.service;
 import com.alkemy.pelicula.pelicula.dto.ActorBasicDTO;
 import com.alkemy.pelicula.pelicula.dto.ActorDTO;
 import java.util.List;
+import java.util.Set;
+
 public interface ActorService {
     //public ActorDTO save(ActorDTO dto){
         //save actors

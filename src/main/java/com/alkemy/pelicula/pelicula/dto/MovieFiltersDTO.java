@@ -1,6 +1,8 @@
 package com.alkemy.pelicula.pelicula.dto;
 
 import java.time.LocalDate;
+import java.util.Set;
+
 import  lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
@@ -14,16 +16,16 @@ public class MovieFiltersDTO {
     private Long id;
  //   private String imageUrl;
     private String title;
-    private LocalDate fechaCreacion;
+   // private LocalDate fechaCreacion;
    // private Long calification;
+    private Set<Long> name;
     private String order;
-    private String genre;
-    public MovieFiltersDTO(String title, LocalDate fechaCreacion, String order, String genre) {
+    public MovieFiltersDTO(String title,Set<Long> name, String order) {
         this.title = title;
         //   this.imageUrl = imageUrl;
-        this.fechaCreacion= fechaCreacion;
+        //this.fechaCreacion= fechaCreacion;
+        this.name= name;
         this.order= order;
-        this.genre= genre;
     }
     public boolean isASC() {
         return this.order.compareToIgnoreCase("ASC")==0;

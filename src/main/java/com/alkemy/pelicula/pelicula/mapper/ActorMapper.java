@@ -6,14 +6,21 @@ import com.alkemy.pelicula.pelicula.dto.ActorDTO;
 import com.alkemy.pelicula.pelicula.dto.MovieDTO;
 import com.alkemy.pelicula.pelicula.entity.ActorEntity;
 import com.alkemy.pelicula.pelicula.entity.MoviesEntity;
+import com.alkemy.pelicula.pelicula.service.ActorService;
+import com.alkemy.pelicula.pelicula.service.MovieService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 
 @Component
 public class ActorMapper {
+   // private MovieMapper movieMapper;
+   @Autowired
     private MoviesEntity moviesEntity;
     private MovieMapper movieMapper;
+    private MovieService movieService;
+
 
     public ActorEntity actorDTO2Entity(ActorDTO dto) {
         ActorEntity entity = new ActorEntity();
@@ -34,12 +41,8 @@ public class ActorMapper {
         dto.setHistory(entity.getHistory());
 
         if (loadMovie){
-            List<MovieDTO> movieDTO= this.movieMapper.movieEntityList2DTOList(entity.getMoviess(), false);
-<<<<<<< HEAD
+            List<MovieDTO> movieDTO= this.movieMapper.moviesEntityList2DTOList(entity.getMoviess(), false);
             dto.setMoviess(movieDTO);
-=======
-                    dto.setMoviess(movieDTO);
->>>>>>> new
         }
         return dto;
     }
@@ -66,8 +69,12 @@ public class ActorMapper {
         }
         return dtos;
     }
+    /**
+     * @param entities (Set or List)
+     * @return loadMovie
+     */
+
     public List<ActorBasicDTO> actorEntitySet2BasicDTOList(Collection<ActorEntity> entities){
-<<<<<<< HEAD
         List<ActorBasicDTO> dtos= new ArrayList<>();
         ActorBasicDTO basicDTO;
         for (ActorEntity entity: entities){
@@ -84,27 +91,6 @@ public class ActorMapper {
         return dtos;
     }
 
-    public List<ActorDTO> actorEntityList2DTOList(Set<ActorEntity> actors, boolean b) {
-    }
+  //  public List<ActorDTO> actorEntityList2DTOList(Set<ActorEntity> actors, boolean b) {
+    //}
 }
-=======
-    List<ActorBasicDTO> dtos= new ArrayList<>();
-    ActorBasicDTO basicDTO;
-    for (ActorEntity entity: entities){
-        basicDTO = new ActorBasicDTO();
-        basicDTO.setId(entity.getId());
-        basicDTO.setImageUrl(entity.getImageUrl());
-        basicDTO.setName(entity.getName());
-       // basicDTO.setAge(entity.getAge());
-       // basicDTO.setWeight(entity.getWeight());
-      //  basicDTO.setHistory(entity.getHistory());
-      //  basicDTO.setDenomination(entity.getDenomination());
-        dtos.add(basicDTO);
-    }
-    return dtos;
-    }
-
-    public List<ActorDTO> actorEntityList2DTOList(Set<ActorEntity> actors, boolean b) {
-    }
-}
->>>>>>> new

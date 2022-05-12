@@ -1,6 +1,6 @@
 package com.alkemy.pelicula.pelicula.repository.specification;
+import org.springframework.util.StringUtils;
 
-import antlr.StringUtils;
 import com.alkemy.pelicula.pelicula.dto.ActorFiltersDTO;
 import com.alkemy.pelicula.pelicula.entity.ActorEntity;
 import com.alkemy.pelicula.pelicula.entity.MoviesEntity;
@@ -16,11 +16,12 @@ import java.util.List;
 import javax.persistence.criteria.Predicate;
 import java.util.regex.Pattern;
 @Component
-public class ActorSpecification implements ActorService {
+//public class ActorSpecification implements ActorService {
+public class ActorSpecification  {
     public Specification<ActorEntity> getByFilters(ActorFiltersDTO filtersDTO) {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
-            if (StringUtils.hasText(filtersDTO.getName())) {
+            if (StringUtils.hasLength(filtersDTO.getName())) {
                 predicates.add(
                         criteriaBuilder.like(
                                 criteriaBuilder.lower(root.get("name")),
@@ -30,7 +31,7 @@ public class ActorSpecification implements ActorService {
             //    public Specification<ActorEntity> getByFilters(ActorFiltersDTO filtersDTO){
             //     return (root, query, criteriaBuilder) ->{
             //        List<Predicate> predicates = new ArrayList<>();
-            if (StringUtils.hasText(filtersDTO.getAge())) {
+            if (StringUtils.hasLength(filtersDTO.getAge())) {
                 predicates.add(
                         criteriaBuilder.like(
                                 criteriaBuilder.lower(root.get("denomination")),

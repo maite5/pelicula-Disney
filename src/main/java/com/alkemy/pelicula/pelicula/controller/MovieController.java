@@ -1,6 +1,7 @@
 package com.alkemy.pelicula.pelicula.controller;
 import com.alkemy.pelicula.pelicula.dto.MovieBasicDTO;
 import com.alkemy.pelicula.pelicula.dto.MovieDTO;
+import com.alkemy.pelicula.pelicula.service.ActorService;
 import com.alkemy.pelicula.pelicula.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,15 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("movie")
 public class MovieController{
-<<<<<<< HEAD
     private MovieService movieService;
-=======
-  private MovieService movieService;
->>>>>>> new
+
   /*  @Autowired
     private MovieService = movieService;
     @PostMapping
@@ -45,18 +44,6 @@ public class MovieController{
         return ResponseEntity.ok(movies);
     }
 
-<<<<<<< HEAD
-=======
-    } */
-    @Autowired
-    public MovieController(MovieService movieService){ this.movieService = movieService;}
-    @GetMapping("/all")
-    public ResponseEntity<List<MovieBasicDTO>> getAll() {
-        List<MovieBasicDTO> movies = this.movieService.getAll();
-        return ResponseEntity.ok(movies);
-    }
-
->>>>>>> new
     @GetMapping("/{id}") //31 word
     public  ResponseEntity<MovieDTO> getDetailsById(@PathVariable Long id){
         MovieDTO movie =this.movieService.getDetailsById(id);
@@ -64,16 +51,12 @@ public class MovieController{
     }
     @GetMapping
     public ResponseEntity<List<MovieDTO>>getDetailsByFilters(
-<<<<<<< HEAD
             //  @RequestParam(required = false) String name,
-=======
-          //  @RequestParam(required = false) String name,
->>>>>>> new
             @RequestParam(required = false) String title,
-            @RequestParam(required = false) String fechaCreacion,
+            @RequestParam(required = false) Set<Long> name,
             @RequestParam(required = false, defaultValue = "ASC") String order
     ) {
-        List<MovieDTO> movie = this.movieService.getByFilters(title,fechaCreacion,order);
+        List<MovieDTO> movie = this.movieService.getByFilters(title,name,order);
         return ResponseEntity.ok(movie);
     }
     @PostMapping
@@ -93,17 +76,13 @@ public class MovieController{
     }
     @PostMapping("/{id}/actor/{idActor}")
     public ResponseEntity<Void> addActor(@PathVariable Long id, @PathVariable Long idActor){
-        this.actorService.addActor(id, idActor);
+        this.movieService.addActor(id, idActor);
         return ResponseEntity.status(HttpStatus.CREATED).build(); //69
     }
     @DeleteMapping("/{id}/actor/{idActor}")
     public ResponseEntity<Void> removeActor(@PathVariable Long id, @PathVariable Long idActor){
-        this.actorService.removeActor(id, idActor);
+        this.movieService.removeActor(id, idActor);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> new

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("actor")
@@ -24,20 +25,15 @@ public class ActorController {
 
     @GetMapping("/{id}") //31 word
     public  ResponseEntity<ActorDTO> getDetailsById(@PathVariable Long id){
-<<<<<<< HEAD
         ActorDTO actor =this.actorService.getDetailsById(id);
         return ResponseEntity.ok(actor);
-=======
-    ActorDTO actor =this.actorService.getDetailsById(id);
-    return ResponseEntity.ok(actor);
->>>>>>> new
     }
     @GetMapping
     //public ResponseEntity<List<ActorDTO>>getAllActor(
-    public ResponseEntity<List<ActorDTO>>getDetailsByFiltes(
+    public ResponseEntity<List<ActorDTO>>getDetailsByFilters(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String age,
-            @RequestParam(required = false) String title,
+            @RequestParam(required = false) Set<Long> title,
             @RequestParam(required = false, defaultValue = "ASC") String order
     ) {
         List<ActorDTO> actor = this.actorService.getByFilters(name,age,title,order);
@@ -48,16 +44,11 @@ public class ActorController {
         ActorDTO result = this.actorService.save(actor);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
-<<<<<<< HEAD
     @PutMapping("/{id}")
-=======
-     @PutMapping("/{id}")
->>>>>>> new
     public ResponseEntity<ActorDTO> update(@PathVariable Long id, @RequestBody ActorDTO actor){
         ActorDTO result= this.actorService.update(id, actor);
         return ResponseEntity.ok().body(result);
     }
-<<<<<<< HEAD
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         this.actorService.delete(id);
@@ -74,33 +65,9 @@ public class ActorController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
     //save actor
-=======
-        @DeleteMapping("/{id}")
-        public ResponseEntity<Void> delete(@PathVariable Long id){
-            this.actorService.delete(id);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
-        @PostMapping("/{id}/movie/{idMovie}")
-                public ResponseEntity<Void> addMovie(@PathVariable Long id, @PathVariable Long idMovie){
-         this.actorService.addMovie(id, idMovie);
-         return ResponseEntity.status(HttpStatus.CREATED).build(); //69
-        }
-        @DeleteMapping("/{id}/movie/{idMovie}")
-                public ResponseEntity<Void> removeMovie(@PathVariable Long id, @PathVariable Long idMovie){
-                this.actorService.removeMovie(id, idMovie);
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-     }
-     //save actor
->>>>>>> new
     /* @PostMapping
      public  ResponseEntity<ActorDTO> save(@RequestBody ActorDTO actor){
          ActorDTO actorGuardado = actorService.save(actor);
          return ResponseEntity.status(HttpStatus.CREATED).body(actorGuardado);
      }*/
-<<<<<<< HEAD
 }
-
-
-=======
-     }
->>>>>>> new

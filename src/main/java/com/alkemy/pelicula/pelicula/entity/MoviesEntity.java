@@ -39,28 +39,26 @@ public class MoviesEntity {
     @ManyToMany(
             cascade= {
                     CascadeType.PERSIST,
-
-            CascadeType.MERGE
+                    CascadeType.MERGE
             } )
-
     @JoinTable(
-
             name= "actor_movies",
-
             joinColumns= @JoinColumn(name="movies_id"),
-
             inverseJoinColumns =@JoinColumn(name= "actor_id"))
          private Set<ActorEntity> actors = new HashSet<>();
     //@Override
-
     public boolean equals(Object obj) {
         if (obj == null)
                 return false;
         if (getClass() != obj.getClass()) return false;
-
         final MoviesEntity other = (MoviesEntity) obj;
-
         return other.id == this.id;
 
     }
+    //delete and remove actor
+    //public void addMovies(MoviesEntity movies) {this.moviess.add(movies);}
+    //public void removeMovies(MoviesEntity movies)  {this.moviess.remove(movies);}
+    public void addActor(ActorEntity actor) {this.actors.add(actor);}
+    public void removeActor(ActorEntity actor)  {this.actors.remove(actor);}
+
 }

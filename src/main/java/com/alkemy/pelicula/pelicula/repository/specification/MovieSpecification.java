@@ -1,7 +1,8 @@
 package com.alkemy.pelicula.pelicula.repository.specification;
-import antlr.StringUtils;
+import org.springframework.util.StringUtils;
 import com.alkemy.pelicula.pelicula.dto.MovieFiltersDTO;
 import com.alkemy.pelicula.pelicula.entity.ActorEntity;
+import com.alkemy.pelicula.pelicula.entity.GenreEntity;
 import com.alkemy.pelicula.pelicula.entity.MoviesEntity;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.CollectionUtils;
@@ -31,7 +32,7 @@ public class MovieSpecification {
                                 criteriaBuilder.lower(root.get("title")),
                                  "%" + filtersDTO.getTitle().toLowerCase() + "%") );
             }
-
+            /*
             if (StringUtils.hasLength(filtersDTO.getFechaCreacion())){
                 /// todo reuse this in a function
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -50,12 +51,17 @@ public class MovieSpecification {
                 Expression<String> actor_id = join.get("id");
                 predicates.add(actor_id.in(filtersDTO.getName()));
             } */
+            if (!CollectionUtils.isEmpty(filtersDTO.getName())){
+                Join<GenreEntity, MoviesEntity> join = root.join("genre", JoinType.INNER);
+                Expression<String> genre_id = join.get("id");
+                predicates.add(genre_id.in(filtersDTO.getName()));
+            }
 
             //remove duplicates
             query.distinct(true);
         //}
         //ordr resolving
-        String orderByField = "fechaCreacion"; //denominacion
+        String orderByField = "title"; //denominacion
         query.orderBy(
                 filtersDTO.isASC()?
                         criteriaBuilder.asc(root.get(orderByField)):
